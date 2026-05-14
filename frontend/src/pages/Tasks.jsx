@@ -5,14 +5,43 @@ import { Plus, MoreVertical, Calendar, CheckSquare } from 'lucide-react';
 
 const Tasks = () => {
     const [tasks, setTasks] = useState([]);
+    const [openMenuId, setOpenMenuId] = useState(null);
+
+    const fetchTasks = async () => {
+        const res = await api.get('/tasks/');
+        setTasks(res.data.results || res.data);
+    };
 
     useEffect(() => {
-        const fetchTasks = async () => {
-            const res = await api.get('/tasks/');
-            setTasks(res.data.results || res.data);
-        };
         fetchTasks();
     }, []);
+
+    const handleDelete = async (id) => {
+        if (window.confirm("Are you sure you want to delete this task?")) {
+            try {
+                await api.delete(`/tasks/${id}/`);
+                fetchTasks();
+            } catch (err) {
+                console.error("Failed to delete task", err);
+                alert("Failed to delete task. You might not have permission.");
+            }
+        }
+        setOpenMenuId(null);
+    };
+
+    const handleEdit = async (task) => {
+        const newTitle = window.prompt("Enter new task title:", task.title);
+        if (newTitle && newTitle !== task.title) {
+            try {
+                await api.patch(`/tasks/${task.id}/`, { title: newTitle });
+                fetchTasks();
+            } catch (err) {
+                console.error("Failed to edit task", err);
+                alert("Failed to edit task.");
+            }
+        }
+        setOpenMenuId(null);
+    };
 
     const getPriorityColor = (priority) => {
         switch(priority) {
@@ -81,10 +110,30 @@ const Tasks = () => {
                                         {task.due_date ? format(new Date(task.due_date), 'MMM dd, yyyy') : 'No due date'}
                                     </div>
                                 </td>
-                                <td className="px-6 py-5 whitespace-nowrap text-right text-sm font-medium">
-                                    <button className="text-surface-400 hover:text-primary-600 transition-colors p-2 hover:bg-primary-50 rounded-lg">
+                                <td className="px-6 py-5 whitespace-nowrap text-right text-sm font-medium relative">
+                                    <button 
+                                        onClick={() => setOpenMenuId(openMenuId === task.id ? null : task.id)}
+                                        className="text-surface-400 hover:text-primary-600 transition-colors p-2 hover:bg-primary-50 rounded-lg focus:outline-none"
+                                    >
                                         <MoreVertical className="w-5 h-5" />
                                     </button>
+                                    
+                                    {openMenuId === task.id && (
+                                        <div className="absolute right-8 top-10 w-32 bg-white rounded-lg shadow-lg border border-surface-200 py-1 z-50">
+                                            <button 
+                                                onClick={() => handleEdit(task)}
+                                                className="w-full text-left px-4 py-2 text-sm text-surface-700 hover:bg-surface-50"
+                                            >
+                                                Quick Edit Title
+                                            </button>
+                                            <button 
+                                                onClick={() => handleDelete(task.id)}
+                                                className="w-full text-left px-4 py-2 text-sm text-rose-600 hover:bg-rose-50"
+                                            >
+                                                Delete
+                                            </button>
+                                        </div>
+                                    )}
                                 </td>
                             </tr>
                         ))}

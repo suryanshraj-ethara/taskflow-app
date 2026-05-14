@@ -5,14 +5,29 @@ import { Plus, MoreVertical, Calendar, Folder } from 'lucide-react';
 
 const Projects = () => {
     const [projects, setProjects] = useState([]);
+    const [openMenuId, setOpenMenuId] = useState(null);
+
+    const fetchProjects = async () => {
+        const res = await api.get('/projects/');
+        setProjects(res.data.results || res.data);
+    };
 
     useEffect(() => {
-        const fetchProjects = async () => {
-            const res = await api.get('/projects/');
-            setProjects(res.data.results || res.data);
-        };
         fetchProjects();
     }, []);
+
+    const handleDelete = async (id) => {
+        if (window.confirm("Are you sure you want to delete this project? All associated tasks will also be deleted.")) {
+            try {
+                await api.delete(`/projects/${id}/`);
+                fetchProjects();
+            } catch (err) {
+                console.error("Failed to delete project", err);
+                alert("Failed to delete project. You might not have permission (Admins only).");
+            }
+        }
+        setOpenMenuId(null);
+    };
 
     return (
         <div className="space-y-6 animate-fade-in">
@@ -74,10 +89,33 @@ const Projects = () => {
                                         {project.deadline ? format(new Date(project.deadline), 'MMM dd, yyyy') : 'No deadline'}
                                     </div>
                                 </td>
-                                <td className="px-6 py-5 whitespace-nowrap text-right text-sm font-medium">
-                                    <button className="text-surface-400 hover:text-primary-600 transition-colors p-2 hover:bg-primary-50 rounded-lg">
+                                <td className="px-6 py-5 whitespace-nowrap text-right text-sm font-medium relative">
+                                    <button 
+                                        onClick={() => setOpenMenuId(openMenuId === project.id ? null : project.id)}
+                                        className="text-surface-400 hover:text-primary-600 transition-colors p-2 hover:bg-primary-50 rounded-lg focus:outline-none"
+                                    >
                                         <MoreVertical className="w-5 h-5" />
                                     </button>
+                                    
+                                    {openMenuId === project.id && (
+                                        <div className="absolute right-8 top-10 w-32 bg-white rounded-lg shadow-lg border border-surface-200 py-1 z-50">
+                                            <button 
+                                                onClick={() => {
+                                                    alert("Edit functionality coming soon!");
+                                                    setOpenMenuId(null);
+                                                }}
+                                                className="w-full text-left px-4 py-2 text-sm text-surface-700 hover:bg-surface-50"
+                                            >
+                                                Edit
+                                            </button>
+                                            <button 
+                                                onClick={() => handleDelete(project.id)}
+                                                className="w-full text-left px-4 py-2 text-sm text-rose-600 hover:bg-rose-50"
+                                            >
+                                                Delete
+                                            </button>
+                                        </div>
+                                    )}
                                 </td>
                             </tr>
                         ))}
