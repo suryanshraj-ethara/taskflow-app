@@ -1,7 +1,9 @@
 import axios from 'axios';
 
 const api = axios.create({
-    baseURL: import.meta.env.VITE_API_URL || 'http://localhost:8000/api',
+    // If VITE_API_URL is provided, use it. Otherwise, use /api for production (relative to same domain)
+    // or fallback to localhost if we're somehow running in dev without VITE_API_URL.
+    baseURL: import.meta.env.VITE_API_URL || (import.meta.env.PROD ? '/api' : 'http://localhost:8000/api'),
 });
 
 api.interceptors.request.use((config) => {
