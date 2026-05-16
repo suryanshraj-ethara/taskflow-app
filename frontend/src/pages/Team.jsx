@@ -12,13 +12,48 @@ const Team = () => {
     const [error, setError] = useState('');
 
     const fetchUsers = async () => {
-        const res = await api.get('/users/');
-        setUsers(res.data.results || res.data);
+        let allUsers = [];
+        let url = '/users/?page=1';
+        while (url) {
+            const res = await api.get(url);
+            const data = res.data;
+            if (data.results) {
+                allUsers = [...allUsers, ...data.results];
+                // Extract relative path from next URL if present
+                if (data.next) {
+                    const nextUrl = new URL(data.next);
+                    url = nextUrl.pathname.replace('/api', '') + nextUrl.search;
+                } else {
+                    url = null;
+                }
+            } else {
+                allUsers = data;
+                url = null;
+            }
+        }
+        setUsers(allUsers);
     };
 
     const fetchProjects = async () => {
-        const res = await api.get('/projects/');
-        setProjects(res.data.results || res.data);
+        let allProjects = [];
+        let url = '/projects/?page=1';
+        while (url) {
+            const res = await api.get(url);
+            const data = res.data;
+            if (data.results) {
+                allProjects = [...allProjects, ...data.results];
+                if (data.next) {
+                    const nextUrl = new URL(data.next);
+                    url = nextUrl.pathname.replace('/api', '') + nextUrl.search;
+                } else {
+                    url = null;
+                }
+            } else {
+                allProjects = data;
+                url = null;
+            }
+        }
+        setProjects(allProjects);
     };
 
     useEffect(() => {
