@@ -50,22 +50,27 @@ def seed():
     yash = User.objects.create_user('yash', 'yash@todoo.com', 'yash123', first_name='Yash', last_name='Agarwal', role='MEMBER')
     madhwan = User.objects.create_user('madhwan', 'madhwan@todoo.com', 'madhwan123', first_name='Madhwan', last_name='Dubey', role='MEMBER')
     mayank = User.objects.create_user('mayank', 'mayank@todoo.com', 'mayank123', first_name='Mayank', last_name='Chauhan', role='MEMBER')
+    
+    # New Members
+    shivansh = User.objects.create_user('shivansh', 'shivansh@todoo.com', 'shivansh123', first_name='Shivansh', last_name='Rai', role='MEMBER')
+    shreyansh = User.objects.create_user('shreyansh', 'shreyansh@todoo.com', 'shreyansh123', first_name='Shreyansh', last_name='Parashar', role='MEMBER')
+    shahnawaz = User.objects.create_user('shahnawaz', 'shahnawaz@todoo.com', 'shahnawaz123', first_name='Md Shahnawaz', last_name='Akhtar', role='MEMBER')
 
     print("Creating projects with unique teams...")
 
-    # --- Team Alpha → Talos (4 members) ---
+    # --- Team Alpha → Talos (5 members) ---
     talos = Project.objects.create(
         title='Talos', description='AI-powered analytics platform for real-time data processing and insights generation.',
         status='ACTIVE', deadline=timezone.now().date() + timedelta(days=45), created_by=suryansh
     )
-    talos.members.add(ankit, satyendra, saumya, manu)
+    talos.members.add(ankit, satyendra, saumya, manu, shivansh)
 
-    # --- Team Beta → Valor (4 members) ---
+    # --- Team Beta → Valor (5 members) ---
     valor = Project.objects.create(
         title='Valor', description='Next-gen mobile banking application with biometric authentication and smart budgeting.',
         status='ACTIVE', deadline=timezone.now().date() + timedelta(days=60), created_by=suryansh
     )
-    valor.members.add(sumit, priya, sneha, rahul)
+    valor.members.add(sumit, priya, sneha, rahul, shreyansh)
 
     # --- Team Gamma → Atlas (4 members) ---
     atlas = Project.objects.create(
@@ -74,12 +79,12 @@ def seed():
     )
     atlas.members.add(dhananjay, vaibhav, shreya, gaurav)
 
-    # --- Team Delta → Vindex (3 members) ---
+    # --- Team Delta → Vindex (4 members) ---
     vindex = Project.objects.create(
         title='Vindex', description='Enterprise search engine with NLP-powered semantic search and document indexing.',
         status='ON_HOLD', deadline=timezone.now().date() + timedelta(days=90), created_by=suryansh
     )
-    vindex.members.add(yash, madhwan, mayank)
+    vindex.members.add(yash, madhwan, mayank, shahnawaz)
 
     print("Creating tasks...")
 
