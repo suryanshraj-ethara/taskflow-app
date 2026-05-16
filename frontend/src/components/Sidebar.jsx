@@ -1,7 +1,7 @@
 import React, { useContext } from 'react';
 import { NavLink } from 'react-router-dom';
 import { AuthContext } from '../contexts/AuthContext';
-import { LayoutDashboard, Folder, CheckSquare, Users, LogOut } from 'lucide-react';
+import { LayoutDashboard, Folder, CheckSquare, Users, LogOut, UserCircle } from 'lucide-react';
 
 const Sidebar = () => {
     const { logout, user } = useContext(AuthContext);
@@ -15,6 +15,8 @@ const Sidebar = () => {
     if (user?.role === 'ADMIN') {
         navItems.push({ path: '/team', label: 'Team', icon: Users });
     }
+
+    navItems.push({ path: '/profile', label: 'My Profile', icon: UserCircle });
 
     return (
         <aside className="w-64 glass-dark text-white flex flex-col min-h-screen relative z-20 shadow-2xl">
