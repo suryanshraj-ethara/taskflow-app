@@ -20,10 +20,10 @@ const Sidebar = () => {
         <aside className="w-64 glass-dark text-white flex flex-col min-h-screen relative z-20 shadow-2xl">
             <div className="p-6">
                 <div className="flex items-center gap-2 mb-1">
-                    <div className="w-8 h-8 rounded-lg bg-gradient-to-br from-primary-400 to-primary-600 flex items-center justify-center shadow-lg shadow-primary-500/30">
-                        <span className="font-bold text-white tracking-tighter">TF</span>
+                    <div className="w-8 h-8 rounded-lg bg-gradient-to-br from-emerald-400 to-teal-600 flex items-center justify-center shadow-lg shadow-emerald-500/30">
+                        <span className="font-bold text-white tracking-tighter text-xs">TD</span>
                     </div>
-                    <h1 className="text-xl font-bold tracking-tight text-white">TaskFlow</h1>
+                    <h1 className="text-lg font-bold tracking-tight text-white">Todoo</h1>
                 </div>
                 <p className="text-surface-400 text-xs font-medium ml-10 tracking-wide uppercase">{user?.role === 'ADMIN' ? 'Admin Portal' : 'Workspace'}</p>
             </div>

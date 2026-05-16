@@ -29,61 +29,80 @@ const Register = () => {
     };
 
     return (
-        <div className="min-h-screen bg-surface-50 flex flex-col justify-center py-12 sm:px-6 lg:px-8 relative overflow-hidden">
-            <div className="absolute top-0 right-0 w-[800px] h-[800px] bg-indigo-100 rounded-full blur-[150px] opacity-60 pointer-events-none transform translate-x-1/3 -translate-y-1/4"></div>
-            <div className="absolute bottom-0 left-0 w-[800px] h-[800px] bg-primary-100 rounded-full blur-[150px] opacity-60 pointer-events-none transform -translate-x-1/3 translate-y-1/4"></div>
-
-            <div className="sm:mx-auto sm:w-full sm:max-w-md relative z-10">
-                <div className="flex justify-center mb-6">
-                    <div className="w-12 h-12 rounded-xl bg-gradient-to-br from-primary-500 to-indigo-600 flex items-center justify-center shadow-lg shadow-primary-500/30">
-                        <span className="text-xl font-bold text-white tracking-tighter">TF</span>
+        <div className="min-h-screen flex">
+            {/* Left Panel - Hero / Branding */}
+            <div className="hidden lg:flex lg:w-1/2 bg-gradient-to-br from-slate-900 via-indigo-950 to-purple-950 relative overflow-hidden flex-col justify-center items-center p-16">
+                <div className="absolute top-20 left-10 w-72 h-72 bg-indigo-500/20 rounded-full blur-[100px] animate-pulse"></div>
+                <div className="absolute bottom-20 right-10 w-96 h-96 bg-purple-500/15 rounded-full blur-[120px] animate-pulse" style={{animationDelay: '1s'}}></div>
+                <div className="absolute inset-0 opacity-5" style={{backgroundImage: 'radial-gradient(circle, #fff 1px, transparent 1px)', backgroundSize: '30px 30px'}}></div>
+                
+                <div className="relative z-10 text-center max-w-lg">
+                    <div className="flex justify-center mb-8">
+                        <div className="w-20 h-20 rounded-2xl bg-gradient-to-br from-emerald-400 to-teal-500 flex items-center justify-center shadow-2xl shadow-emerald-500/30 border border-emerald-400/30">
+                            <span className="text-3xl font-black text-white tracking-tighter">TD</span>
+                        </div>
                     </div>
+                    <h1 className="text-5xl font-black text-white tracking-tight mb-4">Todoo</h1>
+                    <p className="text-xl text-indigo-200/80 font-medium mb-2">Task Manager</p>
+                    <p className="text-indigo-300/60 text-sm leading-relaxed">
+                        Join your team and start managing projects today. Simple, powerful, and beautiful.
+                    </p>
                 </div>
-                <h2 className="text-center text-3xl font-extrabold text-surface-900 tracking-tight">Create an account</h2>
-                <p className="mt-2 text-center text-sm text-surface-500">Join TaskFlow and start managing your team</p>
             </div>
 
-            <div className="mt-8 sm:mx-auto sm:w-full sm:max-w-md relative z-10 animate-slide-up">
-                <div className="bg-white/80 backdrop-blur-xl py-8 px-4 shadow-xl shadow-surface-200/50 sm:rounded-2xl sm:px-10 border border-white">
-                    <form className="space-y-5" onSubmit={handleSubmit}>
-                        {error && <div className="p-3 rounded-lg bg-rose-50 border border-rose-100 text-rose-600 text-sm font-medium text-center">{error}</div>}
+            {/* Right Panel - Register Form */}
+            <div className="w-full lg:w-1/2 flex flex-col justify-center px-8 sm:px-16 lg:px-20 bg-white relative">
+                <div className="absolute top-0 right-0 w-[400px] h-[400px] bg-purple-50 rounded-full blur-[100px] opacity-60 pointer-events-none transform translate-x-1/3 -translate-y-1/4"></div>
+                
+                <div className="max-w-md w-full mx-auto relative z-10">
+                    <div className="flex justify-center mb-6 lg:hidden">
+                        <div className="w-14 h-14 rounded-xl bg-gradient-to-br from-emerald-400 to-teal-500 flex items-center justify-center shadow-lg shadow-emerald-500/30">
+                            <span className="text-2xl font-black text-white tracking-tighter">TD</span>
+                        </div>
+                    </div>
+                    
+                    <h2 className="text-3xl font-extrabold text-slate-900 tracking-tight">Create an account</h2>
+                    <p className="mt-2 text-sm text-slate-500 mb-8">Join Todoo and start managing your team</p>
+
+                    <form className="space-y-4" onSubmit={handleSubmit}>
+                        {error && <div className="p-3 rounded-xl bg-rose-50 border border-rose-100 text-rose-600 text-sm font-medium text-center">{error}</div>}
                         
                         <div className="grid grid-cols-2 gap-4">
                             <div>
-                                <label className="block text-sm font-semibold text-surface-700">First Name</label>
-                                <input name="first_name" onChange={handleChange} type="text" className="mt-1.5 appearance-none block w-full px-4 py-2.5 bg-surface-50 border border-surface-200 rounded-xl shadow-sm placeholder-surface-400 focus:outline-none focus:ring-2 focus:ring-primary-500 focus:border-transparent sm:text-sm transition-all focus:bg-white" placeholder="John" />
+                                <label className="block text-sm font-semibold text-slate-700 mb-1.5">First Name</label>
+                                <input name="first_name" onChange={handleChange} type="text" className="appearance-none block w-full px-4 py-2.5 bg-slate-50 border border-slate-200 rounded-xl shadow-sm placeholder-slate-400 focus:outline-none focus:ring-2 focus:ring-indigo-500 focus:border-transparent text-sm transition-all focus:bg-white" placeholder="John" />
                             </div>
                             <div>
-                                <label className="block text-sm font-semibold text-surface-700">Last Name</label>
-                                <input name="last_name" onChange={handleChange} type="text" className="mt-1.5 appearance-none block w-full px-4 py-2.5 bg-surface-50 border border-surface-200 rounded-xl shadow-sm placeholder-surface-400 focus:outline-none focus:ring-2 focus:ring-primary-500 focus:border-transparent sm:text-sm transition-all focus:bg-white" placeholder="Doe" />
+                                <label className="block text-sm font-semibold text-slate-700 mb-1.5">Last Name</label>
+                                <input name="last_name" onChange={handleChange} type="text" className="appearance-none block w-full px-4 py-2.5 bg-slate-50 border border-slate-200 rounded-xl shadow-sm placeholder-slate-400 focus:outline-none focus:ring-2 focus:ring-indigo-500 focus:border-transparent text-sm transition-all focus:bg-white" placeholder="Doe" />
                             </div>
                         </div>
 
                         <div>
-                            <label className="block text-sm font-semibold text-surface-700">Username <span className="text-rose-500">*</span></label>
-                            <input name="username" required onChange={handleChange} type="text" className="mt-1.5 appearance-none block w-full px-4 py-2.5 bg-surface-50 border border-surface-200 rounded-xl shadow-sm placeholder-surface-400 focus:outline-none focus:ring-2 focus:ring-primary-500 focus:border-transparent sm:text-sm transition-all focus:bg-white" placeholder="johndoe" />
+                            <label className="block text-sm font-semibold text-slate-700 mb-1.5">Username <span className="text-rose-500">*</span></label>
+                            <input name="username" required onChange={handleChange} type="text" className="appearance-none block w-full px-4 py-2.5 bg-slate-50 border border-slate-200 rounded-xl shadow-sm placeholder-slate-400 focus:outline-none focus:ring-2 focus:ring-indigo-500 focus:border-transparent text-sm transition-all focus:bg-white" placeholder="johndoe" />
                         </div>
 
                         <div>
-                            <label className="block text-sm font-semibold text-surface-700">Email address</label>
-                            <input name="email" type="email" onChange={handleChange} className="mt-1.5 appearance-none block w-full px-4 py-2.5 bg-surface-50 border border-surface-200 rounded-xl shadow-sm placeholder-surface-400 focus:outline-none focus:ring-2 focus:ring-primary-500 focus:border-transparent sm:text-sm transition-all focus:bg-white" placeholder="john@example.com" />
+                            <label className="block text-sm font-semibold text-slate-700 mb-1.5">Email address</label>
+                            <input name="email" type="email" onChange={handleChange} className="appearance-none block w-full px-4 py-2.5 bg-slate-50 border border-slate-200 rounded-xl shadow-sm placeholder-slate-400 focus:outline-none focus:ring-2 focus:ring-indigo-500 focus:border-transparent text-sm transition-all focus:bg-white" placeholder="john@example.com" />
                         </div>
 
                         <div>
-                            <label className="block text-sm font-semibold text-surface-700">Password <span className="text-rose-500">*</span></label>
-                            <input name="password" required type="password" onChange={handleChange} className="mt-1.5 appearance-none block w-full px-4 py-2.5 bg-surface-50 border border-surface-200 rounded-xl shadow-sm placeholder-surface-400 focus:outline-none focus:ring-2 focus:ring-primary-500 focus:border-transparent sm:text-sm transition-all focus:bg-white" placeholder="••••••••" />
+                            <label className="block text-sm font-semibold text-slate-700 mb-1.5">Password <span className="text-rose-500">*</span></label>
+                            <input name="password" required type="password" onChange={handleChange} className="appearance-none block w-full px-4 py-2.5 bg-slate-50 border border-slate-200 rounded-xl shadow-sm placeholder-slate-400 focus:outline-none focus:ring-2 focus:ring-indigo-500 focus:border-transparent text-sm transition-all focus:bg-white" placeholder="••••••••" />
                         </div>
 
-                        <div className="pt-2">
-                            <button type="submit" className="w-full flex justify-center py-3 px-4 border border-transparent rounded-xl shadow-md shadow-primary-500/20 text-sm font-bold text-white bg-primary-600 hover:bg-primary-700 hover:-translate-y-0.5 transition-all focus:outline-none focus:ring-2 focus:ring-offset-2 focus:ring-primary-500">
+                        <div className="pt-1">
+                            <button type="submit" className="w-full flex justify-center py-3.5 px-4 border border-transparent rounded-xl shadow-lg shadow-indigo-500/25 text-sm font-bold text-white bg-gradient-to-r from-indigo-600 to-purple-600 hover:from-indigo-700 hover:to-purple-700 hover:-translate-y-0.5 transition-all focus:outline-none focus:ring-2 focus:ring-offset-2 focus:ring-indigo-500">
                                 Create Account
                             </button>
                         </div>
                     </form>
-                    <div className="mt-8 text-center border-t border-surface-100 pt-6">
-                        <p className="text-sm text-surface-500">
+                    <div className="mt-8 text-center border-t border-slate-100 pt-6">
+                        <p className="text-sm text-slate-500">
                             Already have an account?{' '}
-                            <Link to="/login" className="font-semibold text-primary-600 hover:text-primary-500 transition-colors">
+                            <Link to="/login" className="font-semibold text-indigo-600 hover:text-indigo-500 transition-colors">
                                 Sign in
                             </Link>
                         </p>
